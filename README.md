@@ -57,6 +57,18 @@ Any further arguments are presumed to be `$?` aka the error returned by the prev
 
 No mercurial support yet and the svn support isn't good, but then, you're using git anyway. Note that I default to zsh because that's how I roll, but the original defaults to bash.
 
+## Other shells?
+
+Sure. Supporting new shells should be as simple as supporting their color escape sequences by adding to this hash:
+
+```javascript
+var COLOR_TEMPLATES =
+{
+	'bash': function(s) { return '\\[\\e' + s + '\\]'; },
+	'zsh': function(s) { return '%{' + s + '%}'; }
+};
+```
+
 ## TODO
 
 * An option to reverse the prompt direction, for use in zsh right prompts.
