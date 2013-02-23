@@ -27,7 +27,27 @@ function execute(args, callback)
 
 describe('powerline.js', function()
 {
-	describe('#constructor options', function()
+	describe('#parseOptions', function()
+	{
+		it('parses an empty options array', function()
+		{
+			var opts = powerline.parseOptions();
+			opts.should.be.an('object');
+			Object.keys(opts).length.should.equal(0);
+		});
+
+		it('parses a typical array', function()
+		{
+			var opts = powerline.parseOptions(['--shell', 'bash', '--depth', '3', '2']);
+			Object.keys(opts).length.should.equal(3);
+			opts.shell.should.equal('bash');
+			opts.depth.should.equal(3);
+			opts.error.should.equal(true);
+		});
+
+	});
+
+	describe('#constructor', function()
 	{
 		it('is constructed with reasonable defaults', function()
 		{
@@ -41,6 +61,19 @@ describe('powerline.js', function()
 			p.options.showRepo.should.equal(true);
 			p.options.showPath.should.equal(true);
 			p.options.cwdOnly.should.equal(false);
+		});
+
+		it('generates a prompt with the given options', function(done)
+		{
+			var p = new powerline.Powerline();
+			p.cwd = '~/projects/powerline-js';
+			p.buildPrompt(function()
+			{
+				p.segments.length.should.equal(5);
+				p.segments[0].content.should.equal(' ~ ');
+				p.segments[3].content.indexOf(' master').should.equal(0);
+				done();
+			});
 		});
 
 		it('throws when passed an unknown shell', function()
@@ -62,12 +95,12 @@ describe('powerline.js', function()
 
 		});
 
-		it('obeys the repo-only option', function()
+		it('obeys the repo-only option TBD', function()
 		{
 
 		});
 
-		it('obeys the no-repo option', function()
+		it('obeys the no-repo option TBD', function()
 		{
 
 		});
@@ -75,9 +108,15 @@ describe('powerline.js', function()
 
 	describe('#draw', function()
 	{
-		it('returns a string with color escape sequences', function()
+		it('returns a string with color escape sequences TBD', function(done)
 		{
-
+			var p = new powerline.Powerline();
+			p.buildPrompt(function()
+			{
+				var result = p.draw();
+				result.should.be.a('string');
+				done();
+			});
 		});
 
 	});
@@ -174,12 +213,12 @@ describe('powerline.js', function()
 			});
 		});
 
-		it('shows upstream changes', function()
+		it('shows upstream changes TBD', function()
 		{
 
 		});
 
-		it('shows unpushed changes', function()
+		it('shows unpushed changes TBD', function()
 		{
 
 		});

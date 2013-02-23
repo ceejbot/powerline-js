@@ -30,7 +30,8 @@ var COLOR =
 	VIRTUAL_ENV_FG: 22
 };
 
-var SYMBOLS = {
+var SYMBOLS =
+{
 	'compatible':
 	{
 		separator: '\u25b6',
@@ -77,7 +78,6 @@ Shell.prototype.bgcolor = function(code)
 	return this.color('48', code);
 };
 
-
 //---------------------------------------------------
 
 function Powerline(options)
@@ -86,10 +86,10 @@ function Powerline(options)
 	this.options = {};
 	this.options.shell = options.shell || 'zsh';
 	this.options.mode = options.mode || 'patched';
-	this.options.error = options.error || false;
+	this.options.error = options.hasOwnProperty('error') ? options.error : false;
 	this.options.depth = options.depth || 5;
-	this.options.showRepo = options.showRepo || true;
-	this.options.showPath = options.showPath || true;
+	this.options.showRepo = options.hasOwnProperty('showRepo') ? options.showRepo : true;
+	this.options.showPath = options.hasOwnProperty('showPath') ? options.showPath : true;
 	this.options.cwdOnly = options.cwdOnly || false;
 
 	this.shell = new Shell(this.options.shell);
@@ -100,6 +100,19 @@ function Powerline(options)
 	this.segments = [];
 	this.cwd = process.env.PWD || process.cwd();
 }
+
+Powerline.prototype.buildPrompt = function(callback)
+{
+	var self = this;
+
+	this.addVirtualEnvSegment();
+	this.addCWDSegment();
+	this.addRepoSegment(function()
+	{
+		self.addRootIndicator();
+		callback();
+	});
+};
 
 Powerline.prototype.draw = function(code)
 {
@@ -322,14 +335,14 @@ Segment.prototype.draw = function(nextSegment)
 
 //---------------------------------------------------
 
-if (require.main === module)
+function parseOptions(args)
 {
-	var opts = process.argv.slice(2);
+	args = args || [];
 	var options = {};
 
-	while (opts.length)
+	while (args.length)
 	{
-		var opt = opts.shift();
+		var opt = args.shift();
 		switch (opt)
 		{
 			case '--cwd-only':
@@ -339,15 +352,15 @@ if (require.main === module)
 				break;
 
 			case '--shell':
-				options.shell = opts.shift();
+				options.shell = args.shift();
 				break;
 
 			case '--mode':
-				options.mode = opts.shift();
+				options.mode = args.shift();
 				break;
 
 			case '--depth':
-				options.depth = parseInt(opts.shift(), 10);
+				options.depth = parseInt(args.shift(), 10);
 				break;
 
 			case '--repo-only':
@@ -364,17 +377,20 @@ if (require.main === module)
 		}
 	}
 
-	var p = new Powerline(options);
+	return options;
+}
 
-	p.addVirtualEnvSegment();
-	p.addCWDSegment();
-	p.addRepoSegment(function()
+if (require.main === module)
+{
+	var options = parseOptions(process.argv.slice(2));
+	var p = new Powerline(options);
+	p.buildPrompt(function()
 	{
-		p.addRootIndicator();
 		process.stdout.write(p.draw());
 	});
 }
 
 exports.Powerline = Powerline;
 exports.Segment = Segment;
+exports.parseOptions = parseOptions;
 

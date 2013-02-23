@@ -1,4 +1,4 @@
-I was using @milkbikis's excellent [powerline-style shell prompt](https://github.com/milkbikis/powerline-shell) when I decided that I wanted more options. Then I wanted a version in javascript instead of python so I could add those options myself in my current programming environment of choice. Then I started rewriting it. Then I observed that it was faster in javascript than in python, probably because node.js starts up really quickly.
+I was using [milkbikis](https://github.com/milkbikis)'s excellent [powerline-style shell prompt](https://github.com/milkbikis/powerline-shell) when I decided that I wanted more options. Then I wanted a version in javascript instead of python so I could add those options myself in my current programming environment of choice. Then I started rewriting it. Then I observed that it was faster in javascript than in python, probably because node.js starts up really quickly.
 
 This is the tragic result: a powerline-style shell prompt generator for node.
 
@@ -62,3 +62,7 @@ No mercurial support yet and the svn support isn't good, but then, you're using 
 * An option to reverse the prompt direction, for use in zsh right prompts.
 * Mercurial support.
 * Optional timestamp segment.
+
+## License
+
+MIT.
