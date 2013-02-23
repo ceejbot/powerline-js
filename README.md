@@ -2,6 +2,10 @@ I was using @milkbikis's excellent [powerline-style shell prompt](https://github
 
 This is the tragic result: a powerline-style shell prompt generator for node.
 
+![the powerline prompt in action](http://i.imgur.com/e7GpyGV.png)
+
+The last segment of the prompt shows the git branch active, if you're in a git repo. Repos with uncommitted modifications are shown in red. If there are untracked files, a + is added. If you have unpushed changes, there's an ⇡ with the change count. If the upstream repo has changes you've fetched but not yet merged, there's a ⇣ with the count of how many you're behind.
+
 ## Installation
 
 `npm install powerline` should install `powerline` in your node path. Or clone the repo & symlink `powerline.js` to some location in your path.
@@ -57,4 +61,4 @@ No mercurial support yet and the svn support isn't good, but then, you're using 
 
 * An option to reverse the prompt direction, for use in zsh right prompts.
 * Mercurial support.
-
+* Optional timestamp segment.
