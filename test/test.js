@@ -123,6 +123,35 @@ describe('powerline.js', function()
 			var p = new powerline.Powerline();
 			p.addGitSegment(function()
 			{
+				p.segments.length.should.equal(1);
+				p.segments[0].content.indexOf(' master').should.equal(0);
+				console.log(p.segments);
+				done();
+			});
+		});
+
+		it('displays the presence of untracked files', function(done)
+		{
+			child.exec('touch foobar.txt', function(err, stdout, stderr)
+			{
+				var p = new powerline.Powerline();
+				p.addGitSegment(function()
+				{
+					p.segments.length.should.equal(1);
+					p.segments[0].content.indexOf('+').should.be.above(7);
+					fs.unlinkSync('foobar.txt');
+					done();
+				});
+			});
+		});
+
+		it('displays in a different color if files are modified', function(done)
+		{
+			var p = new powerline.Powerline();
+			p.addGitSegment(function()
+			{
+				console.log(p.segments);
+				p.segments.length.should.equal(1);
 				done();
 			});
 		});
