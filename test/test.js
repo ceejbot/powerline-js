@@ -125,7 +125,6 @@ describe('powerline.js', function()
 			{
 				p.segments.length.should.equal(1);
 				p.segments[0].content.indexOf(' master').should.equal(0);
-				console.log(p.segments);
 				done();
 			});
 		});
@@ -145,14 +144,33 @@ describe('powerline.js', function()
 			});
 		});
 
-		it('displays in a different color if files are modified', function(done)
+		it('displays the repo with a red background if files are modified', function(done)
 		{
-			var p = new powerline.Powerline();
-			p.addGitSegment(function()
+			child.exec('echo "blat blat" > README.md', function(err, stdout, stderr)
 			{
-				console.log(p.segments);
-				p.segments.length.should.equal(1);
-				done();
+				var p = new powerline.Powerline();
+				p.addGitSegment(function()
+				{
+					p.segments.length.should.equal(1);
+					p.segments[0].fg.should.equal(15);
+					p.segments[0].bg.should.equal(161);
+					done();
+				});
+			});
+		});
+
+		it('displays the repo with a red background if files are modified', function(done)
+		{
+			child.exec('git checkout -- README.md', function(err, stdout, stderr)
+			{
+				var p = new powerline.Powerline();
+				p.addGitSegment(function()
+				{
+					p.segments.length.should.equal(1);
+					p.segments[0].fg.should.equal(0);
+					p.segments[0].bg.should.equal(148);
+					done();
+				});
 			});
 		});
 
