@@ -4,7 +4,7 @@ This is the tragic result: a powerline-style shell prompt generator for node.
 
 ## Installation
 
-`npm install powerline-js` (speculatively because I haven't yet published this) or clone the repo. Symlink `powerline.js` to some location in your path.
+`npm install powerline` should install `powerline` in your node path. Or clone the repo & symlink `powerline.js` to some location in your path.
 
 Then go to the original most excellent project page and [find a patched font you like](https://github.com/Lokaltog/vim-powerline/wiki/Patched-fonts).
 

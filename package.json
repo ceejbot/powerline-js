@@ -1,5 +1,5 @@
 {
-	"name": "powerline-js",
+	"name": "powerline",
 	"version": "0.0.1",
 	"description": "a powerline-style shell prompt builder",
 	"main": "powerline.js",
