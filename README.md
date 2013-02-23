@@ -2,7 +2,7 @@ I was using [milkbikis](https://github.com/milkbikis)'s excellent [powerline-sty
 
 This is the tragic result: a powerline-style shell prompt generator for node.
 
-![the powerline prompt in action](http://i.imgur.com/e7GpyGV.png)
+![the powerline prompt in action](http://i.imgur.com/8TfiSVZ.png)
 
 The last segment of the prompt shows the git branch active, if you're in a git repo. Repos with uncommitted modifications are shown in red. If there are untracked files, a + is added. If you have unpushed changes, there's an ⇡ with the change count. If the upstream repo has changes you've fetched but not yet merged, there's a ⇣ with the count of how many you're behind.
 
