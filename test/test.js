@@ -198,7 +198,7 @@ describe('powerline.js', function()
 			});
 		});
 
-		it('displays the repo with a red background if files are modified', function(done)
+		it('displays the repo with a green background if files are unmodified', function(done)
 		{
 			child.exec('git checkout -- README.md', function(err, stdout, stderr)
 			{
