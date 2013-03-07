@@ -95,14 +95,31 @@ describe('powerline.js', function()
 
 		});
 
-		it('obeys the repo-only option TBD', function()
+		it('obeys the repo-only option', function(done)
 		{
-
+			var opts = powerline.parseOptions(['--repo-only']);
+			var p = new powerline.Powerline(opts);
+			p.cwd = '~/projects/powerline-js';
+			p.buildPrompt(function()
+			{
+				p.segments.length.should.equal(2);
+				p.segments[0].content.indexOf(' master').should.equal(0);
+				p.segments[1].content.indexOf('$').should.equal(3);
+				done();
+			});
 		});
 
-		it('obeys the no-repo option TBD', function()
+		it('obeys the no-repo option', function(done)
 		{
-
+			var opts = powerline.parseOptions(['--no-repo']);
+			var p = new powerline.Powerline(opts);
+			p.cwd = '~/projects/powerline-js';
+			p.buildPrompt(function()
+			{
+				p.segments.length.should.equal(4);
+				p.segments[3].content.indexOf('$').should.equal(3);
+				done();
+			});
 		});
 	});
 
