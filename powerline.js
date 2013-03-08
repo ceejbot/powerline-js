@@ -247,7 +247,7 @@ Powerline.prototype.addGitSegment = function(callback)
 
 		for (var i = 0; i < lines.length; i++)
 		{
-			if (lines[i][1] === 'M')
+			if ((lines[i][1] === 'M') || (lines[i][0] === 'M'))
 				hasPending = true;
 			else if (lines[i][0] === '?')
 				hasUntracked = true;
