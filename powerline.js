@@ -6,6 +6,9 @@
 var
 	child = require('child_process');
 
+
+// echo "⮀ ± ⭠ ➦ ✔ ✘ ⚡"
+
 var COLOR =
 {
 	PATH_BG: 237,  // dark grey
@@ -86,7 +89,6 @@ function Powerline(options)
 	this.options = {};
 	this.options.shell = options.shell || 'zsh';
 	this.options.mode = options.mode || 'patched';
-	this.options.error = options.hasOwnProperty('error') ? options.error : false;
 	this.options.depth = options.depth || 5;
 	this.options.showRepo = options.hasOwnProperty('showRepo') ? options.showRepo : true;
 	this.options.showPath = options.hasOwnProperty('showPath') ? options.showPath : true;
@@ -99,6 +101,8 @@ function Powerline(options)
 
 	this.segments = [];
 	this.cwd = process.env.PWD || process.cwd();
+	this.isRoot = process.getuid() === 0;
+	this.error = options.hasOwnProperty('error') ? options.error : false;
 }
 
 Powerline.prototype.buildPrompt = function(callback)
@@ -132,12 +136,26 @@ Powerline.prototype.draw = function(code)
 	return result.join('');
 };
 
+Powerline.prototype.addContextSegment = function()
+{
+	// if root or on another system, say so
+	var ctx = '';
+	if (this.isRoot)
+		ctx += 'root';
+
+	this.segments.push(new Segment(this,
+		' ' + ctx + ' ',
+		COLOR.VIRTUAL_ENV_FG,
+		COLOR.VIRTUAL_ENV_BG
+	));
+};
+
 Powerline.prototype.addCWDSegment = function()
 {
 	if (!this.options.showPath)
 		return;
 
-	var home = process.env['HOME'];
+	var home = process.env.HOME;
 	var cwd = this.cwd;
 
 	if (cwd.indexOf(home) === 0)
@@ -179,14 +197,24 @@ Powerline.prototype.addCWDSegment = function()
 
 Powerline.prototype.addRootIndicator = function()
 {
-	var bg = this.options.error ? COLOR.CMD_FAILED_BG : COLOR.CMD_PASSED_BG;
-	var fg = this.options.error ? COLOR.CMD_FAILED_FG : COLOR.CMD_PASSED_FG;
-	this.segments.push(new Segment(this, ' \\$ ', fg, bg));
+	var bg = this.error ? COLOR.CMD_FAILED_BG : COLOR.CMD_PASSED_BG;
+	var fg = this.error ? COLOR.CMD_FAILED_FG : COLOR.CMD_PASSED_FG;
+
+	var symbol = ' ';
+	if (this.isRoot)
+		symbol += '\u26a1';
+	if (this.error)
+		symbol += '✘';
+	if (symbol.length === 1)
+		symbol += '\\$';
+	symbol += ' ';
+
+	this.segments.push(new Segment(this, symbol, fg, bg));
 };
 
 Powerline.prototype.addVirtualEnvSegment = function()
 {
-	var env = process.env['VIRTUAL_ENV'];
+	var env = process.env.VIRTUAL_ENV;
 	if (!env)
 		return;
 
@@ -236,6 +264,8 @@ Powerline.prototype.addGitSegment = function(callback)
 		var matches = status.match(/^## ([^\.\s]*)/);
 		if (matches)
 			branch = matches[1];
+		if (branch !== 'master')
+			branch = '⭠ ' + branch;
 
 		matches = status.match(/ahead\s+(\d+)/);
 		if (matches)
