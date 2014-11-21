@@ -208,8 +208,8 @@ describe('powerline.js', function()
 				p.addGitSegment(function()
 				{
 					p.segments.length.should.equal(1);
-					p.segments[0].fg.should.equal(15);
-					p.segments[0].bg.should.equal(161);
+					p.segments[0].fg.should.equal(process.env.POWERLINE_REPO_DIRTY_FG || 15);
+					p.segments[0].bg.should.equal(process.env.POWERLINE_REPO_DIRTY_BG || 161);
 					done();
 				});
 			});
@@ -223,8 +223,8 @@ describe('powerline.js', function()
 				p.addGitSegment(function()
 				{
 					p.segments.length.should.equal(1);
-					p.segments[0].fg.should.equal(0);
-					p.segments[0].bg.should.equal(148);
+					p.segments[0].fg.should.equal(process.env.POWERLINE_REPO_CLEAN_FG || 0);
+					p.segments[0].bg.should.equal(process.env.POWERLINE_REPO_CLEAN_BG || 148);
 					done();
 				});
 			});
