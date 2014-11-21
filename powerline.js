@@ -11,26 +11,26 @@ var
 
 var COLOR =
 {
-	PATH_BG: 237,  // dark grey
-	PATH_FG: 250,  // light grey
-	CWD_FG: 254, // nearly-white grey
-	SEPARATOR_FG: 244,
+	PATH_BG: process.env.POWERLINE_PATH_BG || 237,  // dark grey
+	PATH_FG: process.env.POWERLINE_PATH_FG || 250,  // light grey
+	CWD_FG: process.env.POWERLINE_CWD_FG || 254, // nearly-white grey
+	SEPARATOR_FG: process.env.POWERLINE_SEPARATOR_FG || 244,
 
-	REPO_CLEAN_BG: 148, // a light green color
-	REPO_CLEAN_FG: 0,  // black
-	REPO_DIRTY_BG: 161, // pink/red
-	REPO_DIRTY_FG: 15, // white
+	REPO_CLEAN_BG: process.env.POWERLINE_REPO_CLEAN_BG || 148, // a light green color
+	REPO_CLEAN_FG: process.env.POWERLINE_REPO_CLEAN_FG || 0,  // black
+	REPO_DIRTY_BG: process.env.POWERLINE_REPO_DIRTY_BG || 161, // pink/red
+	REPO_DIRTY_FG: process.env.POWERLINE_REPO_DIRTY_FG || 15, // white
 
-	CMD_PASSED_BG: 236,
-	CMD_PASSED_FG: 15,
-	CMD_FAILED_BG: 161,
-	CMD_FAILED_FG: 15,
+	CMD_PASSED_BG: process.env.POWERLINE_CMD_PASSED_BG || 236,
+	CMD_PASSED_FG: process.env.POWERLINE_CMD_PASSED_FG || 15,
+	CMD_FAILED_BG: process.env.POWERLINE_CMD_FAILED_BG || 161,
+	CMD_FAILED_FG: process.env.POWERLINE_CMD_FAILED_FG || 15,
 
-	SVN_CHANGES_BG: 148,
-	SVN_CHANGES_FG: 22, // dark green
+	SVN_CHANGES_BG: process.env.POWERLINE_SVN_CHANGES_BG || 148,
+	SVN_CHANGES_FG: process.env.POWERLINE_SVN_CHANGES_FG || 22, // dark green
 
-	VIRTUAL_ENV_BG: 35, // a mid-tone green
-	VIRTUAL_ENV_FG: 22
+	VIRTUAL_ENV_BG: process.env.POWERLINE_VIRTUAL_ENV_BG || 35, // a mid-tone green
+	VIRTUAL_ENV_FG: process.env.POWERLINE_VIRTUAL_ENV_FG || 22
 };
 
 var SYMBOLS =
@@ -206,7 +206,7 @@ Powerline.prototype.addRootIndicator = function()
 	if (this.error)
 		symbol += '✘';
 	if (symbol.length === 1)
-		symbol += '\\$';
+		symbol += (this.options.shell === 'zsh') ? '$' : '\\$';
 	symbol += ' ';
 
 	this.segments.push(new Segment(this, symbol, fg, bg));
@@ -423,4 +423,3 @@ if (require.main === module)
 exports.Powerline = Powerline;
 exports.Segment = Segment;
 exports.parseOptions = parseOptions;
-
