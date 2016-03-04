@@ -1,35 +1,30 @@
 {
-	"name": "powerline",
-	"version": "0.0.2",
-	"description": "a powerline-style shell prompt builder",
-	"main": "powerline.js",
-	"bin":
-	{
-		"powerline": "./powerline.js"
-	},
-	"scripts":
-	{
-		"test": "mocha  -R spec test/*.js"
-	},
-	"repository":
-	{
-		"type": "git",
-		"url": "git://github.com/ceejbot/powerline-js.git"
-	},
-	"keywords":
-	[
-		"bash",
-		"zsh",
-		"prompt",
-		"powerline",
-		"git",
-		"svn"
-	],
-	"devDependencies":
-	{
-		"mocha": "*",
-		"chai": "*"
-	},
-	"author": "C J Silverio <ceejceej@gmail.com>",
-	"license": "MIT"
+  "name": "powerline",
+  "description": "a powerline-style shell prompt builder",
+  "version": "0.0.2",
+  "author": "C J Silverio <ceejceej@gmail.com>",
+  "bin": {
+    "powerline": "./powerline.js"
+  },
+  "devDependencies": {
+    "chai": "~3.5.0",
+    "mocha": "~2.4.5"
+  },
+  "keywords": [
+    "bash",
+    "git",
+    "powerline",
+    "prompt",
+    "svn",
+    "zsh"
+  ],
+  "license": "MIT",
+  "main": "powerline.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ceejbot/powerline-js.git"
+  },
+  "scripts": {
+    "test": "mocha  -R spec test/*.js"
+  }
 }
